@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:todoey/components/tasks_list.dart";
+import "package:todoey/screens/task_add_screen.dart";
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
@@ -16,7 +17,15 @@ class TasksScreen extends StatelessWidget {
         ),
         elevation: 5,
         backgroundColor: Colors.lightBlueAccent,
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (BuildContext cotext) {
+              return SingleChildScrollView(child: TaskAddScreen());
+            },
+          );
+        },
         child: Icon(Icons.add, color: Colors.white, size: 50.0),
       ),
       body: Column(
@@ -51,7 +60,7 @@ class TasksScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "12 Tasks",
+                  "${tasksList.length} Tasks",
                   style: TextStyle(color: Colors.white, fontSize: 15.0),
                 ),
               ],
