@@ -5,8 +5,6 @@ import "package:todoey/screens/task_add_screen.dart";
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
 
-  static const List<String> tasksList = ["Task 1", "Task 2", "Task 3"];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +58,7 @@ class TasksScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "${tasksList.length} Tasks",
+                  "3 Tasks",
                   style: TextStyle(color: Colors.white, fontSize: 15.0),
                 ),
               ],
@@ -75,7 +73,7 @@ class TasksScreen extends StatelessWidget {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(list: tasksList),
+              child: TasksList(),
             ),
           ),
         ],
