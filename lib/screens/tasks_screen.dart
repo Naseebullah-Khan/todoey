@@ -2,8 +2,34 @@ import "package:flutter/material.dart";
 import "package:todoey/components/tasks_list.dart";
 import "package:todoey/screens/task_add_screen.dart";
 
-class TasksScreen extends StatelessWidget {
+import "../components/task_tile.dart";
+import "../models/task.dart";
+
+class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
+
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasksList = [
+    Task(name: "Task 1"),
+    Task(name: "Task 2"),
+    Task(name: "Task 3"),
+  ];
+  late String newTask;
+
+  TaskTile itemBuilder(BuildContext context, int index) {
+    return TaskTile(
+      task: tasksList[index],
+      onChanged: (bool? i) {
+        setState(() {
+          tasksList[index].toggleTaskCompletion();
+        });
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +46,19 @@ class TasksScreen extends StatelessWidget {
             context: context,
             isScrollControlled: true,
             builder: (BuildContext cotext) {
-              return SingleChildScrollView(child: TaskAddScreen());
+              return SingleChildScrollView(
+                child: TaskAddScreen(
+                  addTask: () {
+                    setState(() {
+                      tasksList.add(Task(name: newTask));
+                    });
+                    Navigator.pop(context);
+                  },
+                  onChanged: (String newValue) {
+                    newTask = newValue;
+                  },
+                ),
+              );
             },
           );
         },
@@ -58,7 +96,7 @@ class TasksScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "3 Tasks",
+                  "${tasksList.length} Tasks",
                   style: TextStyle(color: Colors.white, fontSize: 15.0),
                 ),
               ],
@@ -73,7 +111,7 @@ class TasksScreen extends StatelessWidget {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(),
+              child: TasksList(tasksList: tasksList, itemBuilder: itemBuilder),
             ),
           ),
         ],

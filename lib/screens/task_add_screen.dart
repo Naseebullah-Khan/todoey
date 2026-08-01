@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class TaskAddScreen extends StatelessWidget {
-  const TaskAddScreen({super.key});
+  const TaskAddScreen({
+    super.key,
+    required this.addTask,
+    required this.onChanged,
+  });
+
+  final void Function()? addTask;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +48,7 @@ class TaskAddScreen extends StatelessWidget {
                 ),
               ),
             ),
+            onChanged: onChanged,
           ),
           SizedBox(height: 20.0),
           TextButton(
@@ -50,7 +58,7 @@ class TaskAddScreen extends StatelessWidget {
               shape: LinearBorder(),
               textStyle: TextStyle(fontSize: 20.0),
             ),
-            onPressed: () => {},
+            onPressed: addTask,
             child: Text("Add"),
           ),
         ],
