@@ -1,38 +1,16 @@
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 import "package:todoey/components/tasks_list.dart";
+import "package:todoey/data.dart";
 import "package:todoey/screens/task_add_screen.dart";
 
-import "../components/task_tile.dart";
-import "../models/task.dart";
-
-class TasksScreen extends StatefulWidget {
+class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
 
   @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasksList = [
-    Task(name: "Task 1"),
-    Task(name: "Task 2"),
-    Task(name: "Task 3"),
-  ];
-  late String newTask;
-
-  TaskTile itemBuilder(BuildContext context, int index) {
-    return TaskTile(
-      task: tasksList[index],
-      onChanged: (bool? i) {
-        setState(() {
-          tasksList[index].toggleTaskCompletion();
-        });
-      },
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
+    String newTask = "";
+
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
@@ -49,9 +27,9 @@ class _TasksScreenState extends State<TasksScreen> {
               return SingleChildScrollView(
                 child: TaskAddScreen(
                   addTask: () {
-                    setState(() {
-                      tasksList.add(Task(name: newTask));
-                    });
+                    // setState(() {
+                    //   tasksListProvider.add(Task(name: newTask));
+                    // });
                     Navigator.pop(context);
                   },
                   onChanged: (String newValue) {
@@ -95,9 +73,13 @@ class _TasksScreenState extends State<TasksScreen> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Text(
-                  "${tasksList.length} Tasks",
-                  style: TextStyle(color: Colors.white, fontSize: 15.0),
+                Consumer<Data>(
+                  builder: (context, data, child) {
+                    return Text(
+                      "${data.tasksCount} Tasks",
+                      style: TextStyle(color: Colors.white, fontSize: 15.0),
+                    );
+                  },
                 ),
               ],
             ),
@@ -111,7 +93,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TasksList(tasksList: tasksList, itemBuilder: itemBuilder),
+              child: TasksList(),
             ),
           ),
         ],
