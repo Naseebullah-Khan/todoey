@@ -20,12 +20,12 @@ class TasksList extends StatelessWidget {
           ),
           itemCount: data.tasksCount,
           itemBuilder: (BuildContext context, int index) {
+            final task = data.tasksList[index];
+
             return TaskTile(
-              task: data.tasksList[index],
+              task: task,
               onChanged: (bool? i) {
-                // setState(() {
-                //   data.tasksList[index].toggleTaskCompletion();
-                // });
+                data.updateTask(task);
               },
             );
           },

@@ -23,4 +23,9 @@ class Data extends ChangeNotifier {
     _tasksList.add(Task(name: name));
     notifyListeners();
   }
+
+  void updateTask(Task task) {
+    task.toggleTaskCompletion();
+    notifyListeners();
+  }
 }
