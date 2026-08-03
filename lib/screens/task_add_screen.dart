@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/data.dart';
 
 class TaskAddScreen extends StatelessWidget {
-  const TaskAddScreen({
-    super.key,
-    required this.addTask,
-    required this.onChanged,
-  });
-
-  final void Function()? addTask;
-  final void Function(String)? onChanged;
+  const TaskAddScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    String newTask = "";
     return Padding(
       padding: EdgeInsets.only(
         top: 15.0,
@@ -48,7 +44,9 @@ class TaskAddScreen extends StatelessWidget {
                 ),
               ),
             ),
-            onChanged: onChanged,
+            onChanged: (String newValue) {
+              newTask = newValue;
+            },
           ),
           SizedBox(height: 20.0),
           TextButton(
@@ -58,7 +56,10 @@ class TaskAddScreen extends StatelessWidget {
               shape: LinearBorder(),
               textStyle: TextStyle(fontSize: 20.0),
             ),
-            onPressed: addTask,
+            onPressed: () {
+              Provider.of<Data>(context, listen: false).addTask(newTask);
+              Navigator.pop(context);
+            },
             child: Text("Add"),
           ),
         ],

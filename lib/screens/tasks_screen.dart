@@ -9,8 +9,6 @@ class TasksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String newTask = "";
-
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
@@ -24,19 +22,7 @@ class TasksScreen extends StatelessWidget {
             context: context,
             isScrollControlled: true,
             builder: (BuildContext cotext) {
-              return SingleChildScrollView(
-                child: TaskAddScreen(
-                  addTask: () {
-                    // setState(() {
-                    //   tasksListProvider.add(Task(name: newTask));
-                    // });
-                    Navigator.pop(context);
-                  },
-                  onChanged: (String newValue) {
-                    newTask = newValue;
-                  },
-                ),
-              );
+              return SingleChildScrollView(child: TaskAddScreen());
             },
           );
         },
